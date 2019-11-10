@@ -1,17 +1,24 @@
 package com.svafvel.software.production.latihanfragmentandroid;
 
 
+import android.app.Activity;
+import android.app.VoiceInteractor;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -72,10 +79,31 @@ public class DetailCategoryFragment extends Fragment implements View.OnClickList
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String categoryName = getArguments().getString(EXTRA_NAME);
-        tvCategoryName.setText(categoryName);
-        tvCategoryDescription.setText(getDescription());
+        if(savedInstanceState != null){
+
+            String descFromBundler = savedInstanceState.getString(EXTRA_DESCRIPTION);
+            setDescription(descFromBundler);
+
+        }
+
+        if(getArguments() != null){
+
+            String categoryName = getArguments().getString(EXTRA_NAME);
+            tvCategoryName.setText(categoryName);
+            tvCategoryDescription.setText(getDescription());
+
+        }
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+
+        super.onSaveInstanceState(outState);
+
+        outState.putString(EXTRA_DESCRIPTION, getDescription());
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -83,12 +111,25 @@ public class DetailCategoryFragment extends Fragment implements View.OnClickList
         switch (v.getId()){
 
             case R.id.btn_profile :
+                Intent mIntent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(mIntent);
                 break;
 
             case R.id.btn_show_dialog :
+                OptionDialogFragment mOptionDialogFragment = new OptionDialogFragment();
+                FragmentManager mFragmentManager = getChildFragmentManager();
+                mOptionDialogFragment.show(mFragmentManager, OptionDialogFragment.class.getSimpleName());
                 break;
 
         }
 
     }
+
+    OptionDialogFragment.OnOptionDialogListener optionDialogListener = new OptionDialogFragment.OnOptionDialogListener() {
+        @Override
+        public void onOptionChosen(String text) {
+            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        }
+    };
+
 }
