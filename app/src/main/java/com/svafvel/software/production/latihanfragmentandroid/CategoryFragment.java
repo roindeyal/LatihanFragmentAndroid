@@ -3,12 +3,10 @@ package com.svafvel.software.production.latihanfragmentandroid;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.view.FrameMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +16,10 @@ import android.widget.Button;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class CategoryFragment extends Fragment implements View.OnClickListener{
 
 
-    public HomeFragment() {
+    public CategoryFragment() {
         // Required empty public constructor
     }
 
@@ -30,22 +28,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_category, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState){
+
         super.onViewCreated(view, savedInstanceState);
-        Button btnCategory = view.findViewById(R.id.btn_category);
-        btnCategory.setOnClickListener(this);
+        Button btnDetailCategory = view.findViewById(R.id.btn_detail_category);
+        btnDetailCategory.setOnClickListener(this);
 
 
     }
 
     @Override
     public void onClick(View v) {
-
-        if(v.getId() == R.id.btn_category){
+        if(v.getId() == R.id.btn_detail_category){
 
             CategoryFragment mCategoryFragment = new CategoryFragment();
             FragmentManager mFragmentManager = getFragmentManager();
@@ -60,6 +58,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
 
         }
-
     }
 }
